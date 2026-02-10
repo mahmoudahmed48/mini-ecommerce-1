@@ -93,6 +93,21 @@ class DatabaseSeeder extends Seeder
             'address' => 'Egypt, Alexandria'
         ]);
 
+
+        $user = User::where('email', 'nehal@mail.com')->first();
+
+        if ($user)
+        {
+            $cart = $user->getCart();
+
+            $products = Product::limit(2)->get();
+
+            foreach($products as $product)
+            {
+                $cart->addProduct($product, 2);
+            }
+        }
+
         $this->command->info('Created Successfully ✅');
 
 

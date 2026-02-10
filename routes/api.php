@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
 
@@ -28,6 +29,18 @@ Route::get('/products/slug/{slug}', [ProductController::class, 'showBySlug']);
 // Categories
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{categories}', [CategoryController::class, 'show']);
+
+// Cart Routes 
+Route::middleware('auth:sanctum')->prefix('cart')->group(function() {
+
+    Route::get('/', [CartController::class, 'index']);
+    Route::get('/count', [CartController::class, 'count']);
+    Route::post('/add', [CartController::class, 'add']);
+    Route::put('/update/{productId}', [CartController::class, 'update']);
+    Route::delete('/remove/{productId}', [CartController::class, 'remove']);
+    Route::delete('/clear', [CartController::class, 'clear']);
+    
+});
 
 
 // Protected For Users Only 

@@ -23,5 +23,27 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function isAvailable(int $quantity = 1): bool 
+    {
+        return $this->is_active && $this->stock >= $quantity;
+    }
+
+    public function decreaseQuantity(int $quantity):bool
+    {
+        if ($this->stock < $quantity)
+        {
+            return false;
+        }
+
+        $this->stock -= $quantity;
+        return $this->save();
+    }
+
+    public function increaseQuantity(int $quantity):bool
+    {
+        $this->stock += $quantity;
+        return $this->save();
+    }
+
 
 }
