@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
 
@@ -41,6 +42,19 @@ Route::middleware('auth:sanctum')->prefix('cart')->group(function() {
     Route::delete('/clear', [CartController::class, 'clear']);
     
 });
+
+// Orders Routes 
+Route::middleware('auth:sanctum')->prefix('orders')->group(function() {
+
+    Route::get('/', [OrderController::class, 'index']);
+    Route::post('/', [OrderController::class, 'store']);
+    Route::get('/{orderNumber}', [OrderController::class, 'show']);
+    Route::post('/{orderNumber}/cancel', [OrderController::class, 'cancel']);
+    Route::post('/{orderNumber}/reorder', [OrderController::class, 'reorder']);
+    
+});
+
+Route::get('track-order/{OrderNumber}', [OrderController::class, 'track']);
 
 
 // Protected For Users Only 

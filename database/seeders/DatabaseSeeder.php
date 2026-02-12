@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
@@ -107,6 +108,39 @@ class DatabaseSeeder extends Seeder
                 $cart->addProduct($product, 2);
             }
         }
+
+        $order = Order::create([
+            'order_number' => 'ORD-2024-0001',
+            'user_id' => $user->id,
+            'status'  => 'pending',
+            'total' => 615.95,
+            'shipping_address' => 'Cairo Qism Alameeria',
+            'phone' => '01250021051',
+            'notes' => 'Please Call Before Come',
+            'payment_method' => 'cash_on_delivery',
+            'payment_status' => 'pending'
+        ]);
+
+        $order->items()->create([
+            'product_id' => 1,
+            'product_name' => 'Iphone 14',
+            'product_price' => 299,
+            'quantity' => 1,
+            'total' => 299
+        ]);
+
+        $order->items()->create([
+            'product_id' => 3,
+            'product_name' => 'Laptop 14',
+            'product_price' => 180,
+            'quantity' => 1,
+            'total' => 180
+        ]);
+
+
+
+
+
 
         $this->command->info('Created Successfully ✅');
 
